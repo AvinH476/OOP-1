@@ -3,25 +3,72 @@ from tkinter import ttk
 
 root = tk.Tk()
 root.attributes('-fullscreen', True)
+
+style = ttk.Style()
+style.theme_use("clam")
+
+
 def exit_fullscreen(event=None):
     root.attributes('-fullscreen', False)
+
+
 root.bind('<Escape>', exit_fullscreen)
 
-root.title("ttk example")
+root.title("Main Page")
+
+bg_color = "#808080"
+fg_color = "#E5E7EB"
+accent_color = "#3B82F6"
+accent_hover = "#2563EB"
+
+root.configure(bg=bg_color)
+
+style.configure(
+    "Main.TFrame",
+    background=bg_color,
+)
+
+style.configure(
+    "Title.TLabel",
+    background=bg_color,
+    foreground=fg_color,
+    font=("Segoe UI", 20, "bold")
+)
+
+style.configure(
+    "TButton",
+    font=("Segoe UI", 12),
+    foreground=fg_color,
+    background=accent_color,
+    padding=6,
+)
+
+style.map(
+    "TButton",
+    background=[("active", accent_hover)],
+)
+
+style.configure(
+    "TCombobox",
+    fieldbackground="#1F2933",
+    background="#1F2933",
+    foreground=fg_color,)
 
 
+def show_account_screen(loginpage):
+    button2 = ttk.Button(root, text="Exit", width=5, command=lambda: (exit_button_click(root)))
+    button2.place(x=1060, y=5)
 
-label = ttk.Label(root, text="Shopping App and Log Analyzer", font=("Arial", 18))
-label.place(x=5, y=5)
 
-button = ttk.Button(root, text="Account", command=lambda:(show_account_screen(loginpage)))
-button.place(x=1750, y=5)
-def show_account_screen(loginpage)
-    
-button = ttk.Button(root, text="Exit", width=5, command=lambda: (exit_button_click(root)))
-button.place(x=1860, y=5)
 def exit_button_click(window):
     window.destroy()
+
+
+label = ttk.Label(root, text="Shopping Main Page", font=("Arial", 18))
+label.place(x=5, y=5)
+
+button = ttk.Button(root, text="Account", command=lambda: (show_account_screen(loginpage)))
+button.place(x=950, y=5)
 
 style = ttk.Style(root)
 style.configure('TButton', font=('Arial', 12), foreground='blue')
@@ -29,11 +76,16 @@ style.configure('TButton', font=('Arial', 12), foreground='blue')
 combo = ttk.Combobox(root, values=["Option 1", "Option 2", "Option 3"])
 combo.pack(pady=30)
 
+exit_button = ttk.Button(root, text="Exit", width=5, command=lambda: exit_button_click(root))
+exit_button.place(x=1450, y=5)
+
 combo.set("Select an option")
+
 
 def on_combobox_selected(event):
     selected_value = combo.get()
     print(f"Selected: {selected_value}")
+
 
 combo.bind("<<ComboboxSelected>>", on_combobox_selected)
 root.mainloop()
